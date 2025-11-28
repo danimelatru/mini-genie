@@ -1,13 +1,1 @@
-numpy
-matplotlib
-tqdm
-h5py
-seaborn
 
-jupyter
-ipykernel
-
-gymnasium
-imageio
-einops
-pyyaml
