@@ -5,8 +5,6 @@ This project is a technical implementation of a Generative World Model (GWM) app
 
 Inspired by DeepMind's **Genie** (2024), the goal is to learn a latent action space and environment dynamics purely from unlabeled video data, effectively discovering concepts like "Harvesting" or "Zapping" without supervision.
 
-**Context:** Preparatory research project for an internship at ILLS (International Laboratory on Learning Systems).
-
 ## 🚀 The Pipeline
 
 The architecture follows a strict 3-stage pipeline designed to handle the complexity of small objects (apples) and mode collapse in action discovery.
