@@ -35,7 +35,7 @@ class SimpleGreedyAgent(Agent):
         self.agent_id = agent_id 
         
     def get_action(self, obs, agent_index):
-        # FIX 1: Handle Death/Zap (Observation is None)
+        # Handle Death/Zap (Observation is None)
         if obs is None:
             return self.action_space.sample()
 
@@ -94,7 +94,7 @@ def collect_episode(env, agents, max_steps=1000):
         # --- PROCESS FRAME FOR STORAGE ---
         raw_frame = obs[0] if isinstance(obs, list) else obs
         
-        # FIX 2: Handle Death/Zap in Data Collection
+        # Handle Death/Zap in Data Collection
         # If agent is dead, raw_frame is None. We must create a dummy black frame
         # to maintain the (64, 64, 3) shape consistency for the VQ-VAE.
         if raw_frame is None:

@@ -13,9 +13,9 @@ from pathlib import Path
 # --- CONFIGURATION ---
 BATCH_SIZE = 128
 LEARNING_RATE = 1e-3
-EPOCHS = 10             # 10 Epochs is enough for the RAM-limited dataset
-NUM_LATENT_ACTIONS = 8  # Discover 8 distinct behaviors
-TOKEN_VOCAB = 512       # Must match the 'Nuclear' VQ-VAE
+EPOCHS = 10
+NUM_LATENT_ACTIONS = 8 # Discover 8 distinct behaviors
+TOKEN_VOCAB = 512 # Must match the 'Nuclear' VQ-VAE
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # --- PATH SETUP ---
@@ -42,7 +42,7 @@ class TokenTransitionsDataset(Dataset):
         
         for f in self.files:
             with np.load(f) as data:
-                tokens = data["tokens"]   # (T, 16, 16)
+                tokens = data["tokens"] # (T, 16, 16)
                 actions = data["actions"] # (T, 2)
                 
                 # Flatten tokens for the MLP
@@ -113,7 +113,7 @@ class LatentActionModel(nn.Module):
         
         return pred_next_logits, action_logits
 
-# --- 3. TRAINING LOOP (WITH ENTROPY FIX) ---
+# --- 3. TRAINING LOOP ---
 def main():
     print(f"Running LAM training on {DEVICE}")
     
@@ -143,7 +143,7 @@ def main():
             # 1. Reconstruction Loss (Predicting the future)
             recon_loss = criterion(pred_next_logits.view(-1, TOKEN_VOCAB), next_z.view(-1))
             
-            # 2. Entropy Regularization (THE FIX)
+            # 2. Entropy Regularization
             # Calculate probabilities of actions
             probs = F.softmax(action_logits, dim=1)
             # Calculate average usage of each action in this batch

@@ -6,9 +6,9 @@ import torch.nn as nn
 from torch.utils.data import DataLoader
 from pathlib import Path
 
-# --- CONFIG (Must match your Weighted Loss VQ-VAE) ---
+# --- CONFIG (Must match Weighted Loss VQ-VAE) ---
 EMBEDDING_DIM = 64      
-NUM_EMBEDDINGS = 512     # Match the 'Nuclear' version
+NUM_EMBEDDINGS = 512 # Match the 'Nuclear' version
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # --- PATH SETUP ---

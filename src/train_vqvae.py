@@ -12,8 +12,8 @@ from pathlib import Path
 BATCH_SIZE = 128
 LEARNING_RATE = 2e-4
 EMBEDDING_DIM = 64      
-NUM_EMBEDDINGS = 512    # Doubled vocabulary size
-EPOCHS = 20             # Give it time to learn the hard parts
+NUM_EMBEDDINGS = 512
+EPOCHS = 20
 DECAY = 0.99            
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -122,7 +122,7 @@ class VQVAE(nn.Module):
         self.encoder = nn.Sequential(
             nn.Conv2d(3, 32, 4, 2, 1), nn.ReLU(),
             nn.Conv2d(32, 64, 4, 2, 1), nn.ReLU(),
-            nn.Conv2d(64, 128, 3, 1, 1), # Increased filters
+            nn.Conv2d(64, 128, 3, 1, 1),
             Residual(128, 128, 64),
             Residual(128, 128, 64),
             nn.Conv2d(128, EMBEDDING_DIM, 3, 1, 1) 
@@ -146,7 +146,7 @@ class VQVAE(nn.Module):
         x_recon = self.decoder(quantized)
         return loss, x_recon, _
 
-# --- 4. TRAINING LOOP WITH WEIGHTED LOSS ---
+# --- 4. TRAINING LOOP ---
 def main():
     print(f"Running on device: {DEVICE} (Weighted Loss Mode)")
     
@@ -168,7 +168,7 @@ def main():
             optimizer.zero_grad()
             vq_loss, data_recon, _ = model(data)
             
-            # --- THE FIX: WEIGHTED LOSS ---
+            # --- WEIGHTED LOSS ---
             # Calculate raw error per pixel
             raw_loss = torch.abs(data_recon - data) # L1 Error
             
